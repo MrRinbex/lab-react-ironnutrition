@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import AddFoodForm from './components/AddFoodForm';
 import FoodBox from './components/FoodBox';
+import SearchFood from './components/SearchFood';
 import foods from './foods.json';
 function App() {
   const [foodList, setFoodList] = useState(foods)
@@ -24,9 +25,24 @@ function App() {
     setFoodListBack(filteredFoods)
   return
   }
+
+  const filteredFoods = (food) => {
+    let filtered;
+    if (food === '') {
+      filtered = foodListBack;
+    } else {
+      filtered = foodListBack.filter((foods) => {
+          return foods.name[0].toLowerCase() === food.toLowerCase();
+      })
+    }
+    setFoodList(filtered);
+  }
+
+
   
   return <div className="App">
   <AddFoodForm addFood={addFood}  />
+  <SearchFood filteredFoods={filteredFoods}/>
   
   <h2>Food List</h2>
   
